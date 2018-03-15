@@ -1,0 +1,23 @@
+
+# .bashrc aliases:
+alias plot11='gnuplot "gnuscript11"'
+alias plot12='gnuplot "gnuscript12"'
+alias plot21='gnuplot "gnuscript21"'
+alias plot22='gnuplot "gnuscript22"'
+alias compile1='./scripts/compile1.sh'
+alias compile2='./scripts/compile2.sh'
+alias clean='./scripts/clean.sh'
+
+# plot:
+set term x11 persist
+set xrange [-6:3]
+set yrange [-6:3]
+#set zrange [0:0.3]
+set pm3d
+set isosamples 100
+set pal gray
+set xlabel "x"
+set ylabel "y"
+set zlabel "f1"
+splot (( sin(x)**2 + cos(y)**2 ) / ( 5.0 + x**2 + y**2 )), "f11" with points pointsize 1 pointtype 12
+
