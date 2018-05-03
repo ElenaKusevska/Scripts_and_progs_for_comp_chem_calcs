@@ -1,4 +1,4 @@
-for i in "PhBr_PhBr"  "PhNO2_PhBr"  "PhNO2_PhNO2"  "PhOCH3_PhBr"  "PhOCH3_Ph    NO2"  "PhOCH3_PhOCH3"
+for i in "PhBr_PhBr"  "PhNO2_PhBr"  "PhNO2_PhNO2"  "PhOCH3_PhBr"  "PhOCH3_PhNO2"  "PhOCH3_PhOCH3"
 do
    cd $i
    if [ $i == "PhOCH3_PhBr" ]
@@ -9,7 +9,8 @@ do
    then
       i="Br_Br"
    fi
-
+   
+   echo $i
    echo ' ' | cat >> ../output
    echo '--------------------------------' | cat >> ../output
    echo $i: | cat >> ../output
@@ -17,7 +18,7 @@ do
    echo ' ' | cat >> ../output
    
    # Level of theory:
-   grep '#p' *.g09 >> ../output
+   grep '#p' -A4 *.g09 >> ../output
    echo ' ' | cat >> ../output
 
    # HOMO/LUMO:
