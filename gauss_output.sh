@@ -53,7 +53,6 @@ elif [ $# -ne 0 ]; then
             grep 'Sum of electronic' 1.out >> output
 
             echo ' ' | cat >> output
-            grep 'Thermo' -A 60 1.out >> output 
             cd ..
          else
             echo the file $(pwd)/$i.out does not exist
