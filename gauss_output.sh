@@ -26,6 +26,14 @@ elif [ $# -ne 0 ]; then
             grep '#p' -A4 *.g09 >> output
             echo ' ' | cat >> output
 
+            # Did the job finish succesfully?
+            echo '--------------------------------' | cat >> output
+            echo 'Did the job finish succesfully?' | cat >> output
+            echo '--------------------------------' | cat >> output
+            echo ' ' | cat >> output
+            cat *.out | tail -7 >> output
+            echo ' ' | cat >> output
+
             # HOMO/LUMO:
             echo '--------------------------------' | cat >> output
             echo 'HOMO/LUMO' | cat >> output
@@ -42,6 +50,7 @@ elif [ $# -ne 0 ]; then
             echo ' ' | cat >> output
             grep 'SCF Done' *.out | tail -1 >> output
             echo ' ' | cat >> output
+            energy=$(grep 'SCF Done' *.out | tail -1 | cut -c26-39)
       
             # Thermochemistry:
             echo '--------------------------------' | cat >> output
@@ -49,17 +58,27 @@ elif [ $# -ne 0 ]; then
             echo '--------------------------------' | cat >> output
             echo ' ' | cat >> output
 
-            grep 'Thermal correction' 1.out >> output
-            grep 'Sum of electronic' 1.out >> output
+            grep 'Thermal correction' $i.out >> output
+            grep 'Sum of electronic' $i.out >> output
+
+            zero_point=$(grep 'Sum of electronic and zero-point Energies=' *.out | tail -1 | cut -c55-65)
+
+            enthalpy=$(grep 'Sum of electronic and thermal Enthalpies=' *out | tail -1 | cut -c55-65)
+
+            gibbs=$(grep 'Sum of electronic and thermal Free Energies=' *out | tail -1 | cut -c55-65)
 
             echo ' ' | cat >> output
             cd ..
+            
+            echo 'thermochemistry (E, E0, H, G):'
+            echo $energy $zero_point $enthalpy $gibbs
          else
             echo the file $(pwd)/$i.out does not exist
          fi
       else
          echo the directory $(pwd)/$i does not exist
       fi
+      sleep 5
    done
 fi
 
