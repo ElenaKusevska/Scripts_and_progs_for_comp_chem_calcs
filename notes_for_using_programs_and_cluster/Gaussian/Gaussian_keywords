@@ -1,0 +1,8 @@
+
+#-------------------------------------
+# Gaussian keywords/options:
+#-------------------------------------
+
+gfinput - for viewing with molden
+pop=full - for getting all the MOs
+

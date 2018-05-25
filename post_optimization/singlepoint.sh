@@ -28,7 +28,7 @@ do
 
   rm $i.g09
   mv temp $i.g09
-  rm -f $i.out $i.slurm $i.fchk $i.xyz output
+  rm -f $i.out $i.slurm $i.fchk $i.xyz $i.gjf output
 
   #-------------------------------------------
   # Prepare the slurm script:
