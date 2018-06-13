@@ -35,7 +35,7 @@ echo '#SBATCH --job-name='$j | cat >> $j.sh
 echo '#SBATCH --partition=smp' | cat >> $j.sh
 echo ' ' | cat >> $j.sh
 echo 'cp /ihome/pliu/elk72/nciplot-3.0/src/* ./' | cat >> $j.sh
-echo 'export NCIPLOT_HOME=/ihome/pliu/elk72/nciplot-3.0.' | cat >> $j.sh
+echo 'export NCIPLOT_HOME=/ihome/pliu/elk72/nciplot-3.0' | cat >> $j.sh
 echo ./nciplot $j.nci | cat >> $j.sh
 echo 'rm Make* nciplot *.f90 *.mod *.o' | cat >> $j.sh
 echo ' ' | cat >> $j.sh
