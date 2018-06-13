@@ -30,6 +30,8 @@ echo ulimit -s unlimited | cat >> $i.slurm
 echo export LC_COLLATE=C | cat >> $i.slurm
 echo ' ' | cat >> $i.slurm
 echo cubegen $np MO=HOMO $i.fchk $i.cube 100 h | cat >> $i.slurm
+echo ' ' | cat >> $i.slurm
+echo ' ' | cat >> $i.slurm
 
 cd ..
 mv $i'_HOMO' ../

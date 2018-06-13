@@ -14,7 +14,7 @@ cd spin_density
 #-------------------------------------------
 
 echo '#!/usr/bin/env bash' | cat >> $i.slurm
-echo '#SBATCH --time=96:00:00' | cat >> $i.slurm
+echo '#SBATCH --time=1:00:00' | cat >> $i.slurm
 echo '#SBATCH --nodes=1' | cat >> $i.slurm
 echo '#SBATCH --ntasks=1' | cat >> $i.slurm
 echo '#SBATCH --cpus-per-task='$np | cat >> $i.slurm
@@ -30,6 +30,10 @@ echo ulimit -s unlimited | cat >> $i.slurm
 echo export LC_COLLATE=C | cat >> $i.slurm
 echo ' ' | cat >> $i.slurm
 echo cubegen $np Spin=SCF $i.fchk $i.cube 100 h | cat >> $i.slurm
+echo ' ' | cat >> $i.slurm
+echo ' ' | cat >> $i.slurm
+
+sbatch ./$i.slurm
 
 cd ..
 

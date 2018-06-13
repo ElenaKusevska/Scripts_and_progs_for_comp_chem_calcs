@@ -1,12 +1,14 @@
 #!/bin/bash
 
-np=8 # number of processors
-m=8 # memory
+np=16 # number of processors
+m=24 # memory
 
-for i in 2_7 2_9 3_1 3_3 3_5 3_7 3_9 4_1 4_3 4_5 4_7 4_9 5_1 5_3
+for i in 2_7
 do
 
   echo $i
+  mkdir $i
+  cp $i.gjf $i
   cd $i
   dos2unix $i.gjf
 
@@ -17,12 +19,12 @@ do
   echo %NProc=$np | cat >> $i.g09
   echo %Mem=$m'GB' | cat >> $i.g09
   echo %chk=$i.chk | cat >> $i.g09
-  echo '#p opt=modredundant freq m062x/6-31+g(d) scrf=(smd,solvent=chloroform) geom=connectivity' | cat >> $i.g09
+  echo '#p opt=modredundant freq m062x/6-31+g(d) scrf=(smd,solvent=chloroform) geom=connectivity gfinput' | cat >> $i.g09
   echo ' ' | cat >> $i.g09
   echo $i | cat >> $i.g09
   echo ' ' | cat >> $i.g09
 
-
+  echo '0 1' | cat >> $i.g09
   sed -n 9,117p $i.gjf >> $i.g09
 
   #-------------------------------------------
