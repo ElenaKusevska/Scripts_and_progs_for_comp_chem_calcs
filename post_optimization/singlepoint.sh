@@ -24,7 +24,7 @@ do
                                # multiplicity
 
   echo ' ' | cat >> temp
-  echo '$i.wfn ' | cat >> temp
+  echo $i.wfn  | cat >> temp
   echo ' ' | cat >> temp
 
   rm $i.g09
