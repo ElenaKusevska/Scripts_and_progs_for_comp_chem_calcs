@@ -7,7 +7,7 @@ do
       echo $i:
       echo '--------------------------------'
       echo ' '
-      cat *.out | tail -
+      cat *.out | tail -7
       echo ' '
       grep 'SCF Done' *out | tail -1
       echo ' '

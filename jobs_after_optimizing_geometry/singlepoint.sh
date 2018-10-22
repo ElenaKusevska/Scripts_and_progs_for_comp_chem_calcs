@@ -1,7 +1,8 @@
 #!/bin/bash
 
 np=8 # number of processors
-m=16 # memory
+mg=24 # available memory in gaussian input file
+ms=25 # requested memory in slurm submit script
 
 for i in 4
 do
@@ -13,15 +14,15 @@ do
   #-----------------------------------------------
 
   echo %NProc=$np | cat >> temp
-  echo %Mem=$m'GB' | cat >> temp
+  echo %Mem=$mg'GB' | cat >> temp
   echo %chk=$i.chk | cat >> temp
   echo '#p m062x/6-311+g(d,p) scrf=(smd,solvent=chloroform) Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
   echo ' ' | cat >> temp
   echo $i | cat >> temp
   echo ' ' | cat >> temp
 
-  sed -n 8p $i.g09 >> temp # just the line with charge and
-                               # multiplicity
+  sed -n '/^0\|^1\|^-1/ {p;q}' $i.g09 | cat >> temp 
+             # just the line with charge and multiplicity
 
   echo ' ' | cat >> temp
   echo $i.wfn  | cat >> temp
@@ -40,7 +41,7 @@ do
   echo '#SBATCH --nodes=1' | cat >> $i.slurm
   echo '#SBATCH --ntasks=1' | cat >> $i.slurm
   echo '#SBATCH --cpus-per-task='$np | cat >> $i.slurm
-  echo '#SBATCH --mem='$m'gb' | cat >> $i.slurm
+  echo '#SBATCH --mem='$ms'gb' | cat >> $i.slurm
   echo '#SBATCH --job-name='$i | cat >> $i.slurm
   echo '#SBATCH --output='$i.out | cat >> $i.slurm
   echo '#SBATCH --partition=smp' | cat >> $i.slurm

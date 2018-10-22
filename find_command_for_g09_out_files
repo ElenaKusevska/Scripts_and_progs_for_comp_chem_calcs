@@ -1,0 +1,19 @@
+find ./*  -not -name '*.out' -not -name '*.g09' -print
+find ./*  -not -name '*.out' -not -name '*.g09' -exec rm {} +
+
+find ./*  -name 'slurm*' -print
+find ./*  -name 'slurm*' -exec rm -r {} +
+
+find ./* -type d -name 'spin_density' -print
+find ./* -type d -name 'spin_density' -exec rm -r {} +
+
+find ./* -type d -name 'NCI*' -print
+find ./* -type d -name 'NCI*' -exec rm -r {} +
+
+find ./* -type d -name '*HOMO*' -print
+find ./* -type d -name '*HOMO*' -exec rm -r {} +
+
+find ./* -type d -empty -print
+find ./* -type d -empty -print -exec rm -r {} +
+
+

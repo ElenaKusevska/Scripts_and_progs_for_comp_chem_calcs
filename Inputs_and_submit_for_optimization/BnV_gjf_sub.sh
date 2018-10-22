@@ -23,7 +23,7 @@ do
 	echo $i | cat >> $i-$k.com
 	echo ' ' | cat >> $i-$k.com
 
-	sed -i 's/150 6-/B/g' $i.gjf
+	sed -i 's/150 6-/B/g' $i.gjf # -i redirect to file instead of commandline
 	sed -i 's/400 6-/A/g' $i.gjf
 	grep -e '0 1' -e '0 2' -e '0 3' -e '0 4' -e '0 5' -e '0 6' $i.gjf | head -1 | cat >> $i-$k.com
 	sed '/ B \| V /!d' $i.gjf | cat >> $i-$k.com

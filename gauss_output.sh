@@ -18,10 +18,10 @@ elif [ $# -ne 0 ]; then
             gibbs=' '
 
             # start processing the putput file
-            echo '--------------------------------'
-            echo $i
-            echo '--------------------------------'
-            echo ' '
+            #echo '--------------------------------'
+            #echo $i
+            #echo '--------------------------------'
+            #echo ' '
             echo ' ' | cat >> output
             echo '--------------------------------' | cat >> output
             echo $i: | cat >> output
@@ -44,13 +44,21 @@ elif [ $# -ne 0 ]; then
             cat *.out | tail -7 >> output
             echo ' ' | cat >> output
 
-            # HOMO/LUMO:
+            # HOMO/LUMO (pop=full):
             echo '--------------------------------' | cat >> output
             echo 'HOMO/LUMO' | cat >> output
             echo '--------------------------------' | cat >> output
             echo ' ' | cat >> output
             grep 'Population analysis using the SCF' -A 1000 *.out | tail -1001 | grep ' Alpha  occ. eigenvalues --' | tail -1 >> output
             grep 'Population analysis using the SCF' -A 1000 *.out | tail -1001 | grep ' Alpha virt. eigenvalues --' | head -1 >> output   
+            echo ' ' | cat >> output
+
+            # Are there any negative frequencies?
+            echo '--------------------------------' | cat >> output
+            echo 'Frequencies' | cat >> output
+            echo '--------------------------------' | cat >> output
+            echo ' ' | cat >> output
+            grep 'Frequencies' *.out | head -1 >> output 
             echo ' ' | cat >> output
 
             # Energy:
@@ -78,19 +86,21 @@ elif [ $# -ne 0 ]; then
             gibbs=$(grep 'Sum of electronic and thermal Free Energies=' *out | tail -1 | cut -c54-65)
 
             echo ' ' | cat >> output
-            cd ..
 
-            echo ' '
-            echo 'thermochemistry (E, E0, H, G):'
-            echo $energy $zero_point $enthalpy $gibbs
-            echo ' '
+            #echo ' '
+            #echo '    thermochemistry (E, E0, H, G):'
+            echo $i $energy $zero_point $enthalpy $gibbs
+            grep 'Frequencies' *.out | head -1 
+            #echo ' '
+
+            cd ..
          else
             echo the file $(pwd)/$i.out does not exist
          fi
       else
          echo the directory $(pwd)/$i does not exist
       fi
-      sleep 5
+      sleep 2
    done
 fi
 
