@@ -1,0 +1,5 @@
+Note: add function to pump dihedralsof conformers in a matrix of dihedrals
+where each row is one conformer. For every new conformer check
+diherdrals against previously generated ones. If after 20 runs there
+are no 8 unique conformers. Probably molecule does not have
+many low lying isomers. So, quit program with what you have.

@@ -1,0 +1,11 @@
+Clean up all those separate lines for write '\n'
+
+Get it to print out more information about what the energy was
+at each step, and which mol object was printed to gaussian input
+file at the final step
+
+make that whole process of set - gradients... etc. a function. Will make
+code simpler.
+
+Actually. I'm not sure if this is a good idea just yet. Whether it will
+make the code more clear, or not...
