@@ -1,13 +1,12 @@
 #!/bin/bash
 
-for l in 9 9_1 9_2 9_3 9_4 9_5 9_6 9_7 9_8 9_9 9_10 9_11
+for i in 9 9_1 9_2 9_3 9_4 9_5 9_6 9_7 9_8 9_9 9_10 9_11
 do
    for j in DMF gas o-DCB
    do
       for k in b3lyp m062x
       do
          cd $j'_'$k
-         i=$l
          echo $i $j $k
          if [ -d "$l" ]; then
             cd $i
@@ -15,7 +14,7 @@ do
             np=8 # number of processors
             mg=24 # memory line in gaussian input file
             ms=25 # requested memory in slurm file
-            hr=12 # projected run time of job
+            hr=6 # projected run time of job
             
             #-----------------------------------------------
             # Prepare the Gaussian input file:
@@ -25,6 +24,7 @@ do
             echo %Mem=$mg'GB' | cat >> temp
             echo %chk=$i.chk | cat >> temp
             
+            # gaussian job specification line depending on solvent:
             if [[ $j == "DMF" ]]; then
                echo '#p 5d '$k'/6-311+g(d,p) scrf(smd,solvent=n,n-DiMethylFormamide) pop=nbo output=wfn gfinput' | cat >> temp
             elif [[ $j == "gas" ]]; then
@@ -37,8 +37,11 @@ do
   			   echo $i | cat >> temp
   			   echo ' ' | cat >> temp
 
+            # just the line with charge and multiplicity:
   			   sed -n '/^0\|^1\|^-1/ {p;q}' $i.g16 | cat >> temp 
-             			# just the line with charge and multiplicity
+
+            # Get the coordinates at the last step in the geometry
+            # optimization
             sed -n 'H; /Standard orientation/h; ${g;p;}' $i.out | sed -n '/Standard orientation/,/Rotational/p' | sed -n '/1/,/----/p' | sed -n '/-------------/q;p' | sed -n 's/ 16 /  S /g;p' | sed -n 's/ 6 / C /g;p' | sed -n 's/ 1 / H /g;p' | sed -n 's/ 7 / N /g;p' | sed -n 's/ 8 / O /g;p' | sed -n 's/ 16 /  S /g;p' | cut -c 17-28,32-95 | cat >> temp
 
 			   echo ' ' | cat >> temp
@@ -47,6 +50,7 @@ do
 
 			   rm $i.g16
 			   mv temp $i.g16
+            mv $i.out $i-opt.log
 			   rm -f $i.slurm $i.fchk $i.xyz $i.gjf $i.out output
 
   			   #-------------------------------------------
@@ -80,11 +84,7 @@ do
   			   echo cp $i.fchk '$SLURM_SUBMIT_DIR' | cat >> $i.slurm
   			   echo ' ' | cat >> $i.slurm
   			   echo ' ' | cat >> $i.slurm
-                          
-             echo ' '
-              ls
-             echo ' '
-            cat *.g16
+
             cd .. 
             cd ..
          else

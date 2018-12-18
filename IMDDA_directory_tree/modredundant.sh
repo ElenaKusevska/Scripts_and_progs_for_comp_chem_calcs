@@ -1,27 +1,32 @@
 #!/bin/bash
 
+#redundantmod1='B 14 6 F' # ex: B 1 2 F
+#redundantmod2='B 15 2 F' # ex: B 1 2 F
+charge=0
+multiplicity=1
+
 for i in 1 1_12  1_15  1_18  1_20  1_5 1_1   1_13  1_16  1_19  1_3 1_11  1_14  1_17  1_2   1_4 
 do
    for j in DMF gas o-DCB
    do
       for k in m062x b3lyp
       do
-         mkdir $j'_'$k 2>/dev/null # add a propper if here - if directory
-                           # does not exist, then create it...
+         mkdir $j'_'$k
+         if [ $? -ne 0 ] ; then
+            echo "mkdir error"
+            exit
+         fi
          cd $j'_'$k
 			echo $i $j $k
-         cp -r ../$i ./
-
+         mkdir $i
          cd $i
-         mv $i'.g16' $i'.gjf'
-         rm $i'.slurm'
+         cp $i'.gjf' $i
+         dos2unix $i'.gjf'
 
 			np=16 # number of processors
 			mg=24 # memory line in gaussian input file
 			ms=25 # requested memory in slurm file
 			hr=36 # projected run time of job
-
-  			dos2unix $i.gjf
 
   			#-----------------------------------------------
   			# Prepare the Gaussian input file:
@@ -32,20 +37,25 @@ do
   			echo %chk=$i.chk | cat >> $i.g16
 
 			if [[ $j == "DMF" ]]; then
-  				echo '#p opt freq=noraman 5d '$k'/6-31+g(d) scrf(smd,solvent=n,n-DiMethylFormamide) gfinput' | cat >> $i.g16
+  				echo '#p opt=modredundant freq=noraman 5d '$k'/6-31+g(d) scrf(smd,solvent=n,n-DiMethylFormamide) geom=connectivity gfinput' | cat >> $i.g16
 			elif [[ $j == "gas" ]]; then
-            echo '#p opt freq=noraman 5d '$k'/6-31+g(d) gfinput' | cat >> $i.g16
+            echo '#p opt=modredundant freq=noraman 5d '$k'/6-31+g(d) geom=connectivity gfinput' | cat >> $i.g16
          elif [[ $j == "o-DCB" ]]; then
-            echo '#p opt freq=noraman 5d '$k'/6-31+g(d)scrf(smd,solvent=o-DiChloroBenzene) gfinput' | cat >> $i.g16
+            echo '#p opt=modredundant freq=noraman 5d '$k'/6-31+g(d)scrf(smd,solvent=o-DiChloroBenzene) geom=connectivity gfinput' | cat >> $i.g16
          fi
 
   			echo ' ' | cat >> $i.g16
   			echo 'job title = '$i | cat >> $i.g16
   			echo ' ' | cat >> $i.g16
 
-  			echo '0 1' | cat >> $i.g16
-  			sed -n '/^0/,/^$/p' $i.gjf | tail -n+2 | cat >> $i.g16
-  			echo ' ' | cat >> $i.g16
+  			echo $charge' '$multiplicity | cat >> $i.g16
+  			sed -n '/^ /,/^$/p' $i.gjf | cat >> $i.g16
+  			# print all instances of from line starting with ' ', to first blank line
+
+         # Add redundant mod
+         echo $redundantmod1 | cat >> $i.g16
+         echo $redundantmod2 | cat >> $i.g16
+         echo ' ' | cat >> $i.g16
 
   			#-------------------------------------------
   			# Prepare the slurm script:
