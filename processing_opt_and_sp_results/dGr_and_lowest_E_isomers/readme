@@ -19,10 +19,6 @@ The computed geometries should be in a directory tree of the form:
 The input file should have the structure:
 -------------------------------------------
 
-!!!!!! Important !!!!!!!
-
-For an easy start. Just have it reading the output of goutput? Maybe? or something similar?
-
 Levels of theory: level_of_theory_1 level_of_theory_2 
          // names of directories with the higher and lower levels of theory
          // will read only the first two. Because... it makes no sense to

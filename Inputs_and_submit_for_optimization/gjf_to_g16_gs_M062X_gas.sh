@@ -10,6 +10,10 @@ do
 
   echo $i
   mkdir $i
+  if [ $? -ne 0 ] ; then
+    echo "mkdir error"
+    exit
+  fi
   cp $i.gjf $i
   cd $i
   dos2unix $i.gjf
@@ -23,7 +27,7 @@ do
   echo %chk=$i.chk | cat >> $i.g16
   echo '#p opt freq=noraman 5d m062x/6-31+g(d) gfinput' | cat >> $i.g16
   echo ' ' | cat >> $i.g16
-  echo $i | cat >> $i.g16
+  echo 'job title = '$i | cat >> $i.g16
   echo ' ' | cat >> $i.g16
 
   echo '0 1' | cat >> $i.g16

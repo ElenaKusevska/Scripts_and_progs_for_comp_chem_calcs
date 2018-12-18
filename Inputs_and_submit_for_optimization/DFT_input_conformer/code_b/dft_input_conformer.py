@@ -4,6 +4,7 @@
 # close to the global minimum for DFT optimization
 
 import dft_conf_routines
+import conf_search
 import sys
 import os
 import time
@@ -38,7 +39,6 @@ jobtime='48:00:00'
 
 # Read the molecule from the supplied file:
 mol = next(pybel.readfile(extension[1:], filename))
-mol1 = next(pybel.readfile(extension[1:], filename))
 print("Molecule read. Number of atoms: ", len(mol.atoms), '\n')
 
 # Do you want to find a good structure for dft optimization,
@@ -47,8 +47,12 @@ print("Molecule read. Number of atoms: ", len(mol.atoms), '\n')
 opt = input('Search for low energy conformer [Y], '
       'or just create gaussian input file and slurm script? [N] \n')
 
-# If you want to find a good input geometry for DFT for the structure
+#--------------------------------------------
+# If you want to find a good input geometry 
+# for DFT for the structure
 # in the original .xyz file:
+#--------------------------------------------
+
 if opt == 'Y':
    # Set up the force field / check if the force field can be set up 
    # successfully:
@@ -58,18 +62,23 @@ if opt == 'Y':
        if ff.Setup(mol.OBMol) is False:
            exit("Cannot set up forcefield")
 
+   # Get the energy for the initial geometry:
+   ff.SetCoordinates(mol.OBMol)
+   E = ff.Energy(False)
+
    # File to print structures generated from optimization
    # and rotor searches:
    outputname = 'generated_geometries'
 
-   # Write gaussian and slurm file for initian geometry:
-   print('Writing Gaussian input file and slurm file ' 
-           'with structure from initial geometry \n')
-   
+   # Write initial geometry to files:
+   print('Writing Gaussian input file and slurm file '
+            'with structure from initial geometry and ' 
+            'writing initial geometry ' 
+            'to generated_geometries.xyz\n')
+   dft_conf_routines.writesxyz(mol, outputname, E, overwrite=True)
    dft_conf_routines.prepare_gauss_input(mol, gaussinputname, 
            job_type, method, other_keywords, charge, 
-           multiplicity, memory, nproc)
-   
+           multiplicity, memory, nproc)   
    dft_conf_routines.prepare_slurm_file(gaussinputname, memory, 
            nproc, jobtime)
 
@@ -78,95 +87,52 @@ if opt == 'Y':
    final_directory = os.path.join(current_directory, gaussinputname)
    if not os.path.exists(final_directory):
           os.makedirs(final_directory)
+
    # move gaussian input file and slurm file there:
    os.rename(current_directory + "/" + gaussinputname + ".g16", 
            final_directory + "/" + gaussinputname + ".g16")
    os.rename(current_directory + "/" + gaussinputname + ".slurm",
            final_directory + "/" + gaussinputname + ".slurm")
 
-   print('Writing initial geometry to generated_geometries.xyz\n')
-   ff.SetCoordinates(mol.OBMol)
-   E = ff.Energy(False)
-   dft_conf_routines.writesxyz(mol, outputname, E, overwrite=True)
 
+   #-----------------------------------------------------
    # Find some random geometries for DFT optimization
-   # and print the geometries / energies for each of these steps to a
-   # .xyz file:
+   # and print the geometries / energies for 
+   # each of these steps to a .xyz file:
+   #-----------------------------------------------------
 
-   # E1-E5 weighted rotor search:
-   for i in range(1, 6):
-      print('mol - WeightedRotorSearch -', i, 'start', '\n')
-
-      # find some conformer
-      ff.SetCoordinates(mol.OBMol)  
-      ff.WeightedRotorSearch(250, 150)
-      ff.GetCoordinates(mol.OBMol)
-      E = ff.Energy(False) 
-     
-      # write geometry to files:
-      dft_conf_routines.writesxyz(mol, outputname, E, overwrite=False)
-      ginputname = gaussinputname + '_' + str(i)
-      dft_conf_routines.prepare_gauss_input(mol, ginputname, 
-              job_type, method, other_keywords, charge, 
-              multiplicity, memory, nproc)
-      dft_conf_routines.prepare_slurm_file(ginputname, memory, 
-              nproc, jobtime)
-
-      # create directory "ginputname":
-      current_directory = os.getcwd()
-      final_directory = os.path.join(current_directory, ginputname)
-      if not os.path.exists(final_directory):
-             os.makedirs(final_directory)
-      # move gaussian input file and slurm file there:
-      os.rename(current_directory + "/" + ginputname + ".g16", 
-              final_directory + "/" + ginputname + ".g16")
-      os.rename(current_directory + "/" + ginputname + ".slurm",
-              final_directory + "/" + ginputname + ".slurm")
-
-      print('mol - WeightedRotorSearch -', i, 'done', '\n')
+   # E1-E5 mol1 weighted rotor search:
+   conf_search.weighted_rotor_search_on_mol(1, 6, filename, extension, outputname, 
+                gaussinputname, job_type, method, other_keywords, 
+                charge, multiplicity, memory, nproc, jobtime)
       
-   # E1 - mol - random rotor search:
-   for i in range(6, 11):
-      print('mol  RandomRotorSearch -',i, 'start', '\n')
-
-      # find some conformer:
-      ff.SetCoordinates(mol1.OBMol)
-      ff.RandomRotorSearch(250,150)
-      ff.GetCoordinates(mol1.OBMol)
-      E = ff.Energy(False)
-     
-      # write geometry to files:
-      dft_conf_routines.writesxyz(mol1, outputname, E, overwrite=False)
-      ginputname = gaussinputname + '_' + str(i)
-      dft_conf_routines.prepare_gauss_input(mol1, ginputname, 
-              job_type, method, other_keywords, charge, 
-              multiplicity, memory, nproc)
-      dft_conf_routines.prepare_slurm_file(ginputname, memory, 
-              nproc, jobtime)
+   # E6-E10 mol2 random rotor search:
+   conf_search.random_rotor_search_on_mol(6, 11, filename, extension, outputname, 
+                gaussinputname, job_type, method, other_keywords, 
+                charge, multiplicity, memory, nproc, jobtime)
       
-      # create directory "ginputname":
-      current_directory = os.getcwd()
-      final_directory = os.path.join(current_directory, ginputname)
-      if not os.path.exists(final_directory):
-             os.makedirs(final_directory)
-      # move gaussian input file and slurm file there:
-      os.rename(current_directory + "/" + ginputname + ".g16", 
-              final_directory + "/" + ginputname + ".g16")
-      os.rename(current_directory + "/" + ginputname + ".slurm",
-              final_directory + "/" + ginputname + ".slurm")
+   # E11-E15 mol3 weighted rotor search:
+   conf_search.weighted_rotor_search_on_mol(11, 16, filename, extension, outputname, 
+                gaussinputname, job_type, method, other_keywords, 
+                charge, multiplicity, memory, nproc, jobtime)
 
-      print('mol1  RandomRotorSearch -', i, 'done', '\n')
+   # E16-E20 mol4 random rotor search:
+   conf_search.random_rotor_search_on_mol(16, 21, filename, extension, outputname, 
+                gaussinputname, job_type, method, other_keywords, 
+                charge, multiplicity, memory, nproc, jobtime)
 
-# If you just want to write a gaussian input file and slurm script
-# with the geometry in the original .xyz file:
+#------------------------------------------------
+# If you just want to write a gaussian input 
+# file and slurm script with the
+# geometry in the original .xyz file:
+#------------------------------------------------
+
 else:
    print('Printing Gaussian input file and slurm script '
            'with structure from ' + filename + ':', '\n')
-
    dft_conf_routines.prepare_gauss_input(mol1, gaussinputname, 
            job_type, method, other_keywords, charge, 
            multiplicity, memory, nproc)
-
    dft_conf_routines.prepare_slurm_file(gaussinputname, memory, nproc)
 
 # Calculate and print time:

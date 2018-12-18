@@ -13,7 +13,7 @@
 
 
 // Get all the data we need out of the gaussian output file
-// when there is only one isome
+// when there is only one isomer
 int gauss_output_one_isomer(std::string chemical_species, double& E_opt, \
       double& G_opt, double& freq, double& cpu_time, double& E_sp, double& \
       G_sp, int& imaginary_freq, std::string lower_level_of_theory, \
@@ -145,7 +145,7 @@ int sort_multiple_geometries (std::vector<std::string> isomers, \
 
    while (test == 0) {
       test = 1; // maybe this time they will all be ordered this time
-      for (i=0; i<G_sp_sort.size()-k-1; i=i+1) {
+      for (i=0; i<G_sp_sort.size()-1; i=i+1) {
          if ( G_sp_sort[i] > G_sp_sort[i+1] ) {
             swap_double(G_sp_sort, i, i+1);
             swap_double(E_sp_sort, i, i+1);

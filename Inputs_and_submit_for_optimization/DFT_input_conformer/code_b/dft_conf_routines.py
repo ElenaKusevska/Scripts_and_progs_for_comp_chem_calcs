@@ -46,7 +46,7 @@ def prepare_gauss_input(molecule, inputname, job_type, method, other_keywords, c
     gaussfile.write('#p' + ' ' + job_type + ' ' + method + ' ' + other_keywords)
     gaussfile.write('\n')
     gaussfile.write('\n')
-    gaussfile.write(filename)
+    gaussfile.write('job title = ' + filename)
     gaussfile.write('\n')
     gaussfile.write('\n')
     gaussfile.write(charge + ' ' + multiplicity)

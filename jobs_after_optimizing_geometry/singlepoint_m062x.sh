@@ -31,7 +31,8 @@ do
 
   rm $i.g16
   mv temp $i.g16
-  rm -f $i.out $i.slurm $i.fchk $i.xyz $i.gjf output
+  mv $i.out $i-opt.log
+  rm -f $i.slurm $i.fchk $i.xyz $i.gjf output
 
   #-------------------------------------------
   # Prepare the slurm script:

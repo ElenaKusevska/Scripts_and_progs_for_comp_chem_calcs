@@ -114,8 +114,10 @@ int main() {
    if_file_exist_delete(goutfilename);
    std::ofstream goutput;
    goutput.open (goutfilename.c_str());
-   goutput << "species lowest_E_isomer E_opt G_opt E_sp " 
-           << "G_sp freq cpu_time_minutes" << std::endl;
+   goutput << "species lowest_E_isomer E_" << lower_level_of_theory 
+           << " G_" << lower_level_of_theory << " E_"
+           << higher_level_of_theory << " G_" << higher_level_of_theory
+           << " freq cpu_time_minutes" << std::endl;
    for (i=0; i<chemical_species.size(); i=i+1) {
       goutput << chemical_species[i] << " " << lowest_E_isomer[i] << " " 
               << E_opt[i] << " " << G_opt[i] << " " 
@@ -150,7 +152,11 @@ int main() {
    std::ofstream reaction_energies;
    reaction_energies.open (dGroutfilename.c_str());
 
-   reaction_energies << "R_i: reactants_j(freq_j) ---> products_j(freq_j)"
+   reaction_energies << "lover level od theory: " << lower_level_of_theory
+                     << "     higher level of theory: "
+                     << higher_level_of_theory << std::endl
+                     << " " << std::endl
+                     << "R_i: reactants_j(freq_j) ---> products_j(freq_j)"
                      << std::endl;
 
    for (i=0; i<reactions.size(); i=i+1) {
