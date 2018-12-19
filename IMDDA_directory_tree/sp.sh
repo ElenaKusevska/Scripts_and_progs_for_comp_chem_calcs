@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for i in 9 9_1 9_2 9_3 9_4 9_5 9_6 9_7 9_8 9_9 9_10 9_11
+for i in TS1_birad_1  TS1_birad_2
 do
    for j in DMF gas o-DCB
    do
@@ -8,13 +8,13 @@ do
       do
          cd $j'_'$k # solvent and functional directory
          echo $i $j $k 
-         if [ -d "$l" ]; then
+         if [ -d "$i" ]; then
             cd $i # chemical species directory
             
             np=16 # number of processors
             mg=24 # memory line in gaussian input file
             ms=25 # requested memory in slurm file
-            hr=6 # projected run time of job
+            hr=4 # projected run time of job
             
             #-----------------------------------------------
             # Prepare the Gaussian input file:
@@ -26,11 +26,11 @@ do
             
             # gaussian job specification line depending on solvent:
             if [[ $j == "DMF" ]]; then
-               echo '#p 5d '$k'/6-311+g(d) scrf(smd,solvent=n,n-DiMethylFormamide) Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
+               echo '#p 5d '$k'/6-311+g(d,p) scrf(smd,solvent=n,n-DiMethylFormamide) Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
             elif [[ $j == "gas" ]]; then
-               echo '#p 5d '$k'/6-311+g(d) Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
+               echo '#p 5d '$k'/6-311+g(d,p) Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
             elif [[ $j == "o-DCB" ]]; then
-               echo '#p 5d '$k'/6-311+g(d) scrf(smd,solvent=o-DiChloroBenzene) Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
+               echo '#p 5d '$k'/6-311+g(d,p) scrf(smd,solvent=o-DiChloroBenzene) Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
             fi
 
 			   echo ' ' | cat >> temp
@@ -86,7 +86,7 @@ do
             cd ..
             sleep 2
          else
-            echo $pwd ' - does not exist'
+            echo $(pwd) ' - does not exist'
             # exit
             cd ..
             sleep 5

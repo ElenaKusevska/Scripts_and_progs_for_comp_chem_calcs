@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for i in 1 1_12  1_15  1_18  1_20  1_5 1_1   1_13  1_16  1_19  1_3 1_11  1_14  1_17  1_2   1_4 
+for i in 1_21 2 3 4 5_21 6 7 8 9_11 10 11 12
 do
    for j in DMF gas o-DCB
    do
@@ -10,18 +10,15 @@ do
                            # does not exist, then create it...
          cd $j'_'$k
 			echo $i $j $k
-         cp -r ../$i ./
-
+         mkdir $i
          cd $i
-         mv $i'.g16' $i'.gjf'
-         rm $i'.slurm'
+         cp -r ../../$i'.gjf' ./
+         dos2unix $i.gjf
 
 			np=16 # number of processors
 			mg=24 # memory line in gaussian input file
 			ms=25 # requested memory in slurm file
 			hr=36 # projected run time of job
-
-  			dos2unix $i.gjf
 
   			#-----------------------------------------------
   			# Prepare the Gaussian input file:
@@ -78,7 +75,7 @@ do
 
          cd ..
          cd ..
-         sleep 3
+         sleep 1
       done
    done
 done

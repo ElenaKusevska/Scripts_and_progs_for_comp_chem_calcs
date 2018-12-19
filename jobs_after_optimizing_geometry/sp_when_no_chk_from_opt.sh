@@ -38,7 +38,7 @@ do
 
       # Get the coordinates at the last step in the geometry
       # optimization
-      sed -n 'H; /Standard orientation/h; ${g;p;}' $i.out | sed -n '/Standard orientation/,/Rotational/p' | sed -n '/1/,/----/p' | sed -n '/-------------/q;p' | sed -n 's/ 16 /  S /g;p' | sed -n 's/ 6 / C /g;p' | sed -n 's/ 1 / H /g;p' | sed -n 's/ 7 / N /g;p' | sed -n 's/ 8 / O /g;p' | sed -n 's/ 16 /  S /g;p' | cut -c 17-28,32-95 | cat >> temp
+      sed -n 'H; /Standard orientation/h; ${g;p;}' $i.out | sed -n '/Standard orientation/,/Rotational/p' | sed -n '/1/,/----/p' | sed -n '/-------------/q;p' | cut -c 17-28,32-95 | sed -n 's/^17 / Cl /g;p' | sed -n 's/^ 6 / C /g;p' | sed -n 's/^ 1 / H /g;p' | sed -n 's/^ 7 / N /g;p' | sed -n 's/^ 8 / O /g;p' | sed -n 's/^16 / S /g;p'
 
 	   echo ' ' | cat >> temp
 	   echo $i.wfn  | cat >> temp

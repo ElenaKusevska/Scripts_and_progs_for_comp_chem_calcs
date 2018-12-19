@@ -1,32 +1,32 @@
 #!/bin/bash
 
-#redundantmod1='B 14 6 F' # ex: B 1 2 F
-#redundantmod2='B 15 2 F' # ex: B 1 2 F
+redundantmod1='B 17 25 F' # ex: B 1 2 F
+redundantmod2='B 7 26 F' # ex: B 1 2 F
 charge=0
 multiplicity=1
 
-for i in 1 1_12  1_15  1_18  1_20  1_5 1_1   1_13  1_16  1_19  1_3 1_11  1_14  1_17  1_2   1_4 
+for i in TS1_birad_1  TS1_birad_2
 do
    for j in DMF gas o-DCB
    do
       for k in m062x b3lyp
       do
-         mkdir $j'_'$k
+         mkdir $j'_'$k 2>/dev/null
+         cd $j'_'$k
+			echo $i $j $k
+         mkdir $i
          if [ $? -ne 0 ] ; then
             echo "mkdir error"
             exit
          fi
-         cd $j'_'$k
-			echo $i $j $k
-         mkdir $i
          cd $i
-         cp $i'.gjf' $i
+         cp ../../$i'.gjf' ./
          dos2unix $i'.gjf'
 
 			np=16 # number of processors
 			mg=24 # memory line in gaussian input file
 			ms=25 # requested memory in slurm file
-			hr=36 # projected run time of job
+			hr=72 # projected run time of job
 
   			#-----------------------------------------------
   			# Prepare the Gaussian input file:
@@ -88,7 +88,7 @@ do
 
          cd ..
          cd ..
-         sleep 3
+         sleep 1
       done
    done
 done
