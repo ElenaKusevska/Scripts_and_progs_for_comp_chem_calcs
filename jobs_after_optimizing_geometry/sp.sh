@@ -4,7 +4,7 @@ for i in 9
 do
    j= # solvent: DMF gas o-DCB 
    k= # functional: m062x b3lyp
-   if [ -d "$l" ]; then
+   if [ -d "$i" ]; then
       cd $i # chemical species directory
       
       np=16 # number of processors
@@ -22,11 +22,11 @@ do
       
       # gaussian job specification line depending on solvent:
       if [[ $j == "DMF" ]]; then
-         echo '#p 5d '$k'/6-311+g(d) scrf(smd,solvent=n,n-DiMethylFormamide) Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
+         echo '#p 5d '$k'/6-311+g(d,p) scrf(smd,solvent=n,n-DiMethylFormamide) Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
       elif [[ $j == "gas" ]]; then
-         echo '#p 5d '$k'/6-311+g(d) Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
+         echo '#p 5d '$k'/6-311+g(d,p) Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
       elif [[ $j == "o-DCB" ]]; then
-         echo '#p 5d '$k'/6-311+g(d) scrf(smd,solvent=o-DiChloroBenzene) Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
+         echo '#p 5d '$k'/6-311+g(d,p) scrf(smd,solvent=o-DiChloroBenzene) Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
       fi
 
 		echo ' ' | cat >> temp
