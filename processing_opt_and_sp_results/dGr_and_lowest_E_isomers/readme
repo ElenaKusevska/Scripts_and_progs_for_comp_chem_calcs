@@ -1,5 +1,3 @@
-c++ is a better option than python for this one
-
 ------------------------------------------------------
 Program to calculate the free energies of reactions. 
 ------------------------------------------------------
@@ -33,12 +31,6 @@ R1 r 1 2 p 3 4
 
 R2 r 3 4 IrIII p 5 6 IrIV
 
-For reading: when reach end of file quit. Close file.
-
-If more isomers - sort energies - find lowest energy isomer
-
-Read cpu time. Convert from days/hours/minutes/seconds to just seconds.
-
 -------------------------------------
 The program does the following:
 -------------------------------------
@@ -51,6 +43,13 @@ If there are more isomers (subdirectories in main directory for particular inter
 find lowest one
 
 Calculate free energies of reaction
+
+version_0 - original version, as I initially wrote it
+version_1 - including enthalpy and entropy data to version_0
+version_2 - same as version 1, but uses goodvibes instead
+version_3 - including experimental free energies that are used in
+               combination with the computed free energies, for example
+               for half reactions.
 
 ----------------------------
 Output - reaction energies:
