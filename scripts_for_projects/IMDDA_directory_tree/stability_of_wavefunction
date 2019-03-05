@@ -1,0 +1,104 @@
+--------------------------------------------
+In general (when you have no idea what 
+your most stable wave function is) :
+--------------------------------------------
+
+1) After opt freq calculation
+
+2) Run stability check with:
+   stable guess=read Geom=Checkpoint
+
+3) If not stable:
+   
+   A) change to higher spin and run: stable Geom=Checkpoint (u)
+   B) change to higher spin and run: stable guess=mix Geom=Checkpoint (u)
+   C) keep same spin and run: stable guess=mix Geom=Checkpoint (u)
+
+4) Alternatively, try substituting stable guess=mix with stable=opt in 3)
+   
+   # Guess=mix mixes the alpha and beta symmetries of the initial guess
+   in order to generate a symmetry-broken wavefunction (for example if
+   an open shell singlet has lower energy)
+   # stable=opt varies the parameters on the wavefunction in order to
+   find a wavefunction that satisfies the stability requirement.
+
+# Guess=Read
+#    Reads the initial guess from the checkpoint file. If the basis set
+#    specified is different from the basis set used in the job which
+#    generated the checkpoint file, then the wave function will be
+#    projected from one basis to the other. This is an efficient way to
+#    switch from one basis to another.
+
+# Possible outputs when using stable:
+#     The wavefunction has an RHF -> UHF instability.
+#     The wavefunction has an internal instability
+#     The wavefunction is stable under the perturbations considered.
+
+------------------------------------------------------------
+In your case. Since you were already looking for an open 
+shell singlet. After the opt freq job, you can:
+------------------------------------------------------------
+
+Either
+
+1) Run stable guess=read Geom=Checkpoint
+   And look for "stable"/"instability" output
+
+Or
+
+2) Run stable=opt guess=read Geom=Checkpoint
+   And look for "stable"/"instability" output
+   Also. If the wavefunction was not stable, it will be optimized, so
+   two single point energies will be displayed. First is unstable 
+   second is stabilized
+
+And also:
+
+3) For the subsequent single point calculation, use stable=opt
+   without guess=read. Or maybe you can do guess=read as well
+   because of basis set changes by projecting smaller basis onto
+   larger one
+
+---------------------------------------------------------------------
+Useful link:
+https://www.cup.uni-muenchen.de/ch/compchem/energy/stability.html
+---------------------------------------------------------------------
+
+# They did a single point calculation, followed by a
+# stable guess=read Geom=Checkpoint calculation
+# Below is example output from the second calculation (stability test)
+# showing a higher lying triplet:
+
+ ***********************************************************************
+ Stability analysis using  singles matrix:
+ ***********************************************************************
+
+ Eigenvectors of the stability matrix:
+
+ Excited state symmetry could not be determined.
+ Eigenvector   1:   Triplet-?Sym  Eigenvalue=-0.2009390
+       7 ->  9         0.70536
+
+ Excited state symmetry could not be determined.
+ Eigenvector   2:   Triplet-?Sym  Eigenvalue=-0.1078684
+       8 ->  9         0.70711
+
+ Excited state symmetry could not be determined.
+ Eigenvector   3:   Singlet-?Sym  Eigenvalue= 0.0000000
+       8 ->  9         0.70711
+
+ Excited state symmetry could not be determined.
+ Eigenvector   4:   Triplet-?Sym  Eigenvalue= 0.0667651
+       6 ->  9         0.65552
+       7 -> 10         0.26170
+
+ Excited state symmetry could not be determined.
+ Eigenvector   5:   Triplet-?Sym  Eigenvalue= 0.2052332
+       5 ->  9         0.70711
+
+ Excited state symmetry could not be determined.
+ Eigenvector   6:   Singlet-?Sym  Eigenvalue= 0.2170234
+       6 ->  9         0.66826
+       7 -> 10         0.22006
+ The wavefunction has an RHF -> UHF instability.
+

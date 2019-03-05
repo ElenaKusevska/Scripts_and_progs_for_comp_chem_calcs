@@ -41,7 +41,7 @@ do
 			elif [[ $j == "gas" ]]; then
             echo '#p opt=modredundant freq=noraman 5d '$k'/6-31+g(d) geom=connectivity gfinput' | cat >> $i.g16
          elif [[ $j == "o-DCB" ]]; then
-            echo '#p opt=modredundant freq=noraman 5d '$k'/6-31+g(d)scrf(smd,solvent=o-DiChloroBenzene) geom=connectivity gfinput' | cat >> $i.g16
+            echo '#p opt=modredundant freq=noraman 5d '$k'/6-31+g(d) scrf(smd,solvent=o-DiChloroBenzene) geom=connectivity gfinput' | cat >> $i.g16
          fi
 
   			echo ' ' | cat >> $i.g16

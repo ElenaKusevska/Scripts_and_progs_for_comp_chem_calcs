@@ -69,7 +69,7 @@ do
      	echo ' ' | cat >> $i.slurm
       
       cd ..
-      sleep 2
+      sleep 1
    else
       echo $i does not exist
    fi

@@ -1,16 +1,11 @@
 #!/bin/bash
-redundantmod1='B 38 40 F' # N-H
-redundantmod2='' # H-O
 
 np=16 # number of processors
 mg=24 # memory line in gaussian input file
 ms=25 # requested memory in slurm file
-hr=72 # projected run time of job
+hr=12 # projected run time of job
 
-charge=0
-multiplicity=1
-
-for i in 38_Cl_a_modred_40_38 38_Cl_b_modred_40_38
+for i in 3
 do
 
   echo $i
@@ -26,19 +21,22 @@ do
   echo %NProc=$np | cat >> $i.g09
   echo %Mem=$mg'GB' | cat >> $i.g09
   echo %chk=$i.chk | cat >> $i.g09
-  echo '#p opt=modredundant freq=noraman m062x/6-31+g(d) scrf=(smd,solvent=chloroform) geom=connectivity gfinput' | cat >> $i.g09
+  echo '#p opt(ts,calcfc,noeigen) freq=noraman um062x/6-31+g(d) scrf=(smd,solvent=chloroform) gfinput' | cat >> $i.g09
   echo ' ' | cat >> $i.g09
   echo 'job title = '$i | cat >> $i.g09
   echo ' ' | cat >> $i.g09
 
-  echo $charge' '$multiplicity | tail -n+1 | cat >> $i.g09
-  sed -n '/^ /,/^$/p' $i.gjf | cat >> $i.g09
-  # print all instances of from line starting with ' ', to first blank line
+  #sed -n '/^0\|^1\|^-1/p' $i.gjf | cat >> $i.g09
+      # print lines starting with 0, 1, or -1 (charge and multiplicity line)
+  #sed -n '/^ C\|^ H\|^ N \|^ O/p' $i.gjf | cat >> $i.g09
+      # print lines starting with ' C', ' H', ' N', or ' O'
+  sed -n '/^0\|^1\|^-1/,/^$/p' $i.gjf | tail -n+1 | cat >> $i.g09
+      # print from after multiplicity line to first blank line
+      # will not work properly without dos2unix first.
+  #sed -n '/^0\|^1\|^-1/,/^$/p' $i.gjf | cat >> $i.g09
+      # same as above, including first line
       # -n - supress double printing
 
-  #echo ' ' | cat >> $i.g09
-  echo $redundantmod1 | cat >> $i.g09
-  #echo $redundantmod2 | cat >> $i.g09
   echo ' ' | cat >> $i.g09
 
   #-------------------------------------------
@@ -70,6 +68,6 @@ do
   echo ' ' | cat >> $i.slurm
 
   cd ..
-  sleep 1
+  sleep 3
 done
 

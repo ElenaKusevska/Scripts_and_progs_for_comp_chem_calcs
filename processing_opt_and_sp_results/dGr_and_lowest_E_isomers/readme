@@ -2,6 +2,9 @@
 Program to calculate the free energies of reactions. 
 ------------------------------------------------------
 
+IMPORTANT: in order for the "Gaussian" version to give entropies
+and enthalpies, run with commandline argument S
+
 ---------------------------------------------------------------------
 The computed geometries should be in a directory tree of the form:
 ---------------------------------------------------------------------
@@ -44,13 +47,6 @@ find lowest one
 
 Calculate free energies of reaction
 
-version_0 - original version, as I initially wrote it
-version_1 - including enthalpy and entropy data to version_0
-version_2 - same as version 1, but uses goodvibes instead
-version_3 - including experimental free energies that are used in
-               combination with the computed free energies, for example
-               for half reactions.
-
 ----------------------------
 Output - reaction energies:
 ----------------------------
@@ -65,10 +61,9 @@ E2:
 3 + 4 + IrIII ---> 5 + 6 + IrIV
 dG = 4.5 kcal/mol
 
-Also. Output lowest energy isomers in separate file.
+Also. Outputs lowest energy isomers in separate file.
 
-Also. Output all isomers in order of increasing energy, if there were more
+Also. Outputs all isomers in order of increasing energy, if there were more
 than one for each structure
 
-Also. Print SI info with lowest E geometries and energies. have an option to just do that.
-
+creates and out_files directory

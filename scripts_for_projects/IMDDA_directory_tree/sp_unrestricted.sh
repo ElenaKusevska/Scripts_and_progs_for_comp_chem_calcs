@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Which is better? guess=read or guess=mix?
+
 for i in TS1_birad_1  TS1_birad_2
 do
    for j in DMF gas o-DCB
@@ -13,10 +15,10 @@ do
             if [ -d "$i" ]; then
                cd $i # chemical species directory
                
-               np=16 # number of processors
+               np=6 # number of processors
                mg=24 # memory line in gaussian input file
                ms=25 # requested memory in slurm file
-               hr=4 # projected run time of job
+               hr=12 # projected run time of job
                
                #-----------------------------------------------
                # Prepare the Gaussian input file:
@@ -28,11 +30,11 @@ do
                
                # gaussian job specification line depending on solvent:
                if [[ $j == "DMF" ]]; then
-                  echo '#p 5d u'$k'/6-311+g(d,p) scrf(smd,solvent=n,n-DiMethylFormamide) guess=mix Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
+                  echo '#p 5d u'$k'/6-311+g(d,p) scrf(smd,solvent=n,n-DiMethylFormamide) guess=mix stable=opt Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
                elif [[ $j == "gas" ]]; then
-                  echo '#p 5d u'$k'/6-311+g(d,p) guess=mix Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
+                  echo '#p 5d u'$k'/6-311+g(d,p) guess=mix stable=opt Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
                elif [[ $j == "o-DCB" ]]; then
-                  echo '#p 5d u'$k'/6-311+g(d,p) scrf(smd,solvent=o-DiChloroBenzene) guess=mix Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
+                  echo '#p 5d u'$k'/6-311+g(d,p) scrf(smd,solvent=o-DiChloroBenzene) guess=mix stable=opt Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
                fi
 
 		         echo ' ' | cat >> temp
@@ -88,7 +90,7 @@ do
                cd ..
                sleep 2
             else
-               echo $(pwd) ' - does not exist'
+               echo $(pwd)':' $i' - does not exist'
                # exit
                cd ..
                sleep 5

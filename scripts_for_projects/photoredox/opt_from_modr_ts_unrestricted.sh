@@ -1,45 +1,38 @@
 #!/bin/bash
-redundantmod1='B 38 40 F' # N-H
-redundantmod2='' # H-O
 
 np=16 # number of processors
 mg=24 # memory line in gaussian input file
 ms=25 # requested memory in slurm file
-hr=72 # projected run time of job
+hr=48 # projected run time of job
 
-charge=0
-multiplicity=1
-
-for i in 38_Cl_a_modred_40_38 38_Cl_b_modred_40_38
+for i in 3
 do
+   echo $i
+   if [ -d "$i" ]; then
+   cd $i
 
-  echo $i
-  mkdir $i
-  cp $i.gjf $i
-  cd $i
-  dos2unix $i.gjf
+   #-----------------------------------------------
+   # Prepare the Gaussian input file:
+   #-----------------------------------------------
 
-  #-----------------------------------------------
-  # Prepare the Gaussian input file:
-  #-----------------------------------------------
+   echo %NProc=$np | cat >> temp
+   echo %Mem=$mg'GB' | cat >> temp
+   echo %chk=$i.chk | cat >> temp
+   echo '#p opt(ts,calcfc,noeigen) freq=noraman um062x/6-31+g(d) scrf=(smd,solvent=chloroform) gfinput' | cat >> temp
+   echo ' ' | cat >> temp
+  	echo 'job title = '$i | cat >> temp
+  	echo ' ' | cat >> temp
 
-  echo %NProc=$np | cat >> $i.g09
-  echo %Mem=$mg'GB' | cat >> $i.g09
-  echo %chk=$i.chk | cat >> $i.g09
-  echo '#p opt=modredundant freq=noraman m062x/6-31+g(d) scrf=(smd,solvent=chloroform) geom=connectivity gfinput' | cat >> $i.g09
-  echo ' ' | cat >> $i.g09
-  echo 'job title = '$i | cat >> $i.g09
-  echo ' ' | cat >> $i.g09
+   sed -n '/^0\|^1\|^-1/ {p;q}' $i.g09 | cat >> temp 
+             	# just the line with charge and multiplicity
+   sed -n 'H; /Standard orientation/h; ${g;p;}' $i.out | sed -n '/Standard orientation/,/Rotational/p' | sed -n '/1/,/----/p' | sed -n '/-------------/q;p' | cut -c 17-28,32-95 | sed -n 's/^17 / Cl/g;p' | sed -n 's/^ 6 / C /g;p' | sed -n 's/^ 1 / H /g;p' | sed -n 's/^ 7 / N /g;p' | sed -n 's/^ 8 / O /g;p' | sed -n 's/^16 / S /g;p' | cat >> temp
+   echo ' ' | cat >> temp
+   echo ' ' | cat >> temp
 
-  echo $charge' '$multiplicity | tail -n+1 | cat >> $i.g09
-  sed -n '/^ /,/^$/p' $i.gjf | cat >> $i.g09
-  # print all instances of from line starting with ' ', to first blank line
-      # -n - supress double printing
-
-  #echo ' ' | cat >> $i.g09
-  echo $redundantmod1 | cat >> $i.g09
-  #echo $redundantmod2 | cat >> $i.g09
-  echo ' ' | cat >> $i.g09
+   rm $i.g09
+   mv temp $i.g09
+   mv $i.out $i-modredundant.log
+   rm -f $i.slurm $i.chk $i.fchk $i.xyz $i.gjf output 
 
   #-------------------------------------------
   # Prepare the slurm script:
@@ -71,5 +64,6 @@ do
 
   cd ..
   sleep 1
-done
 
+  fi
+done
