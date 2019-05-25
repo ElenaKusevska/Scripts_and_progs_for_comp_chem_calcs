@@ -86,12 +86,12 @@ do
             
                cd ..
                cd ..
-               sleep 2
+#               sleep 1
             else
                echo $j'_'$k'/'$i  'does not exist'
                # exit
                cd ..
-               sleep 5
+               sleep 1
             fi
          else
             echo $j'_'$k 'does not exist' $(pwd)

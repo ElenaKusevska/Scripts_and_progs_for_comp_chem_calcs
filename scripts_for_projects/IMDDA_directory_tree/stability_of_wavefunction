@@ -1,3 +1,23 @@
+-----------------------------------------
+Note on using guess=(mix,always)
+-----------------------------------------
+
+You can use it in BOMD and in optimizations for open shell structures,
+especially in cases where an open shell singlet is collapsing to a
+singlet.
+
+Requests that a new initial guess be generated at each point of an 
+optimization. By default, the SCF results from the last point are used for 
+the guess at the next point
+
+In QST3 and irc: Note that the SCF wavefunction for structures in the 
+reactant valley may be quite different from that of structures in the 
+product valley. Guess=Always can be used to prevent the wavefunction of a 
+reactant-like structure from being used as a guess for the wavefunction of 
+a product-like structure.
+
+http://www.uam.es/departamentos/ciencias/quimica/estruct/Manuales/Gaussian98/00000460.htm
+
 --------------------------------------------
 In general (when you have no idea what 
 your most stable wave function is) :

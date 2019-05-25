@@ -1,21 +1,25 @@
-for i in TS2_stepwise
+#!/bin/bash
+
+for i in 1 1_12  1_15  1_18  1_20  1_5 1_1   1_13  1_16  1_19  1_3 1_11  1_14  1_17  1_2   1_4 
 do
    for j in DMF gas o-DCB
    do
       for k in m062x b3lyp
       do
-         mkdir $j'_'$k
+         mkdir $j'_'$k 2>/dev/null # add a propper if here - if directory
+                           # does not exist, then create it...
          cd $j'_'$k
-			echo $i
-         mkdir $i
-         cd $i
+			echo $i $j $k
+         cp -r ../$i ./
 
-         cp ../../$i'.gjf' ./
+         cd $i
+         mv $i'.g16' $i'.gjf'
+         rm $i'.slurm'
 
 			np=16 # number of processors
 			mg=24 # memory line in gaussian input file
 			ms=25 # requested memory in slurm file
-			hr=36 # projected run time of job
+			hr=72 # projected run time of job
 
   			dos2unix $i.gjf
 
@@ -28,19 +32,19 @@ do
   			echo %chk=$i.chk | cat >> $i.g16
 
 			if [[ $j == "DMF" ]]; then
-            echo '#p opt=(calcfc,ts,noeigen) freq=noraman 5d u'$k'/6-31+g(d) scrf(smd,solvent=n,n-DiMethylFormamide) guess=mix gfinput' | cat >> $i.g16
+            echo '#p opt freq=noraman 5d u'$k'/6-31+g(d) scrf(smd,solvent=n,n-DiMethylFormamide) guess=(mix,always) gfinput' | cat >> $i.g16
 			elif [[ $j == "gas" ]]; then
-            echo '#p opt=(calcfc,ts,noeigen) freq=noraman 5d u'$k'/6-31+g(d) gfinput guess=mix' | cat >> $i.g16
+            echo '#p opt freq=noraman 5d u'$k'/6-31+g(d) guess=(mix,always) gfinput' | cat >> $i.g16
          elif [[ $j == "o-DCB" ]]; then
-            echo '#p opt=(calcfc,ts,noeigen) freq=noraman 5d u'$k'/6-31+g(d) scrf(smd,solvent=o-DiChloroBenzene) guess=mix gfinput' | cat >> $i.g16
+            echo '#p opt freq=noraman 5d u'$k'/6-31+g(d) scrf(smd,solvent=o-DiChloroBenzene) guess=(mix,always) gfinput' | cat >> $i.g16
          fi
 
   			echo ' ' | cat >> $i.g16
-  			echo 'job title ='$i | cat >> $i.g16
+  			echo 'job title = '$i | cat >> $i.g16
   			echo ' ' | cat >> $i.g16
 
   			echo '0 1' | cat >> $i.g16
-  			sed -n '/^0\|^1\|^-1/,/^$/p' $i.gjf | tail -n+2 | cat >> $i.g16
+  			sed -n '/^0/,/^$/p' $i.gjf | tail -n+2 | cat >> $i.g16
   			echo ' ' | cat >> $i.g16
 
   			#-------------------------------------------
@@ -74,7 +78,7 @@ do
 
          cd ..
          cd ..
-         sleep 1
+         #sleep 2
       done
    done
 done

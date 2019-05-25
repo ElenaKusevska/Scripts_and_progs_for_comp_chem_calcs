@@ -11,7 +11,7 @@ do
             cd $j'_'$k
             if [ -d "$i" ]; then
                cd $i
-               filename=$i'.slurm'
+               filename=$i'.cmd'
                echo $filename $j $k
                if [ -e $filename ]
                then
@@ -20,7 +20,7 @@ do
                   echo "nok"
                   exit
                fi
-               #sed -i -e 's/time=72:00:00/time=17:00:00/g' $filename
+               #sed -i -e 's/change_from/change_to/g' $i'.cmd'
                sbatch ./$filename
                cd ..
                cd ..

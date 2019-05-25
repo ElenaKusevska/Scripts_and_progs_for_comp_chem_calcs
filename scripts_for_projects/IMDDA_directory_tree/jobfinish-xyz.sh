@@ -66,7 +66,7 @@ do
                echo $i $j $k does not exist
                cd ..
             fi
-            sleep 2
+#            sleep 2
          else
             echo $j $k does not exist
          fi

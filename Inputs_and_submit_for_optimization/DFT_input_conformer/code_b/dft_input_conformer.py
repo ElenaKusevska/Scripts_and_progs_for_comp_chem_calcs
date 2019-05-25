@@ -106,33 +106,33 @@ if opt == 'Y':
                 gaussinputname, job_type, method, other_keywords, 
                 charge, multiplicity, memory, nproc, jobtime)
       
-   # E4-E7 mol2 random rotor search:
-   conf_search.random_rotor_search_on_mol(4, 8, filename, extension, outputname, 
+   # E4-E6 mol2 random rotor search:
+   conf_search.random_rotor_search_on_mol(4, 7, filename, extension, outputname, 
                 gaussinputname, job_type, method, other_keywords, 
                 charge, multiplicity, memory, nproc, jobtime)
       
-   # E8-E11 mol3 weighted rotor search:
-   conf_search.weighted_rotor_search_on_mol(8, 12, filename, extension, outputname, 
+   # E7-E9 mol3 weighted rotor search:
+   conf_search.weighted_rotor_search_on_mol(7, 10, filename, extension, outputname, 
                 gaussinputname, job_type, method, other_keywords, 
                 charge, multiplicity, memory, nproc, jobtime)
 
-   # E12-E15 mol4 random rotor search:
-   conf_search.random_rotor_search_on_mol(12, 16, filename, extension, outputname, 
+   # E10-E12 mol4 random rotor search:
+   conf_search.random_rotor_search_on_mol(10, 13, filename, extension, outputname, 
                 gaussinputname, job_type, method, other_keywords, 
                 charge, multiplicity, memory, nproc, jobtime)
 
-   # E16-E17 mol1 weighted rotor search:
-   conf_search.weighted_rotor_search_on_mol(16, 18, filename, extension, outputname, 
+   # E13-E15 mol1 weighted rotor search:
+   conf_search.weighted_rotor_search_on_mol(13, 16, filename, extension, outputname, 
                 gaussinputname, job_type, method, other_keywords, 
                 charge, multiplicity, memory, nproc, jobtime)
       
-   # E18-E19 mol2 random rotor search:
-   conf_search.random_rotor_search_on_mol(18, 20, filename, extension, outputname, 
+   # E16-E18 mol2 random rotor search:
+   conf_search.random_rotor_search_on_mol(16, 19, filename, extension, outputname, 
                 gaussinputname, job_type, method, other_keywords, 
                 charge, multiplicity, memory, nproc, jobtime)
       
-   # E20-E21 mol3 weighted rotor search:
-   conf_search.weighted_rotor_search_on_mol(20, 22, filename, extension, outputname, 
+   # E19-E21 mol3 weighted rotor search:
+   conf_search.weighted_rotor_search_on_mol(19, 22, filename, extension, outputname, 
                 gaussinputname, job_type, method, other_keywords, 
                 charge, multiplicity, memory, nproc, jobtime)
 

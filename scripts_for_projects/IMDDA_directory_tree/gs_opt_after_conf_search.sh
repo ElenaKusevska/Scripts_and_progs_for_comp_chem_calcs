@@ -16,10 +16,10 @@ do
          mv $i'.g16' $i'.gjf'
          rm $i'.slurm'
 
-			np=16 # number of processors
+			np=6 # number of processors
 			mg=24 # memory line in gaussian input file
 			ms=25 # requested memory in slurm file
-			hr=36 # projected run time of job
+			hr=72 # projected run time of job
 
   			dos2unix $i.gjf
 
@@ -78,7 +78,7 @@ do
 
          cd ..
          cd ..
-         sleep 2
+#         sleep 2
       done
    done
 done

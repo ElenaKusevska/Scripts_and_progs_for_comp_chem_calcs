@@ -88,12 +88,12 @@ do
                
                cd ..
                cd ..
-               sleep 2
+#               sleep 2
             else
                echo $(pwd)':' $i' - does not exist'
                # exit
                cd ..
-               sleep 5
+#               sleep 5
             fi
          else
             echo $dirs ' - does not exist'

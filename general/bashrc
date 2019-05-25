@@ -1,0 +1,12 @@
+export MYPS='$(echo -n $(pwd) | awk '"'"'{ if (length>30) print "..." substr($0,length($0)-30,31); else  print; }'"'"')'
+ PS1='[h2p:$(eval "echo ${MYPS}")]'
+
+alias jobs="squeue | grep 'elk72'"
+alias njobs="squeue | grep 'elk72' | wc -l"
+alias rm='/ihome/pliu/elk72/scripts/trash.sh'
+alias delete='command rm'
+
+alias molden='/ihome/pliu/elk72/molden'
+
+export NCIPLOT_HOME=/ihome/pliu/elk72/nciplot-3.0
+alias nciplot='cp /ihome/pliu/elk72/nciplot-3.0/src/* ./'

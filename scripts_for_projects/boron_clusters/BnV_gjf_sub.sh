@@ -61,6 +61,12 @@ do
 	
 #---------------------------------------------------------------
 # to submit the job to one of the queues:
+#
+# 1-BnV will be submitted to queue 1, 2-BnV to queue 2,
+# 3-BnV to queue 3, 4-BnV to queue 1...
+# it's basically similar to mod($i,3)=1 is submitted to queue 1,
+# mod($i,3)=2 is submitted to queue 2, mod($i,3)=0 is
+# submitted to queue 3
 #---------------------------------------------------------------
 
 	for n in {0..30}

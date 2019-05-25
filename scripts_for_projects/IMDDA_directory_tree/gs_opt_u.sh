@@ -15,10 +15,10 @@ do
          cp -r ../../$i'.gjf' ./
          dos2unix $i.gjf
 
-			np=16 # number of processors
+			np=8 # number of processors
 			mg=24 # memory line in gaussian input file
 			ms=25 # requested memory in slurm file
-			hr=36 # projected run time of job
+			hr=72 # projected run time of job
 
   			#-----------------------------------------------
   			# Prepare the Gaussian input file:
@@ -29,11 +29,11 @@ do
   			echo %chk=$i.chk | cat >> $i.g16
 
 			if [[ $j == "DMF" ]]; then
-  				echo '#p opt freq=noraman 5d u'$k'/6-31+g(d) scrf(smd,solvent=n,n-DiMethylFormamide) gfinput' | cat >> $i.g16
+            echo '#p opt freq=noraman 5d u'$k'/6-31+g(d) scrf(smd,solvent=n,n-DiMethylFormamide) guess=(mix,always) gfinput' | cat >> $i.g16
 			elif [[ $j == "gas" ]]; then
-            echo '#p opt freq=noraman 5d u'$k'/6-31+g(d) gfinput' | cat >> $i.g16
+            echo '#p opt freq=noraman 5d u'$k'/6-31+g(d) guess=(mix,always) gfinput' | cat >> $i.g16
          elif [[ $j == "o-DCB" ]]; then
-            echo '#p opt freq=noraman 5d u'$k'/6-31+g(d) scrf(smd,solvent=o-DiChloroBenzene) gfinput' | cat >> $i.g16
+            echo '#p opt freq=noraman 5d u'$k'/6-31+g(d) scrf(smd,solvent=o-DiChloroBenzene) guess=(mix,always) gfinput' | cat >> $i.g16
          fi
 
   			echo ' ' | cat >> $i.g16
@@ -75,7 +75,7 @@ do
 
          cd ..
          cd ..
-         sleep 1
+         #sleep 1
       done
    done
 done
