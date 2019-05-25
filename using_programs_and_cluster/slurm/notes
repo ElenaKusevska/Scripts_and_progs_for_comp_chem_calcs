@@ -1,7 +1,0 @@
-# slurm commands:
-sbatch ./first_test.slurm
-
-# slurm aliases:
-alias jobs='squeue -u elk72'
-
-
