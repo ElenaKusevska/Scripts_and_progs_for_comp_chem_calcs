@@ -30,11 +30,11 @@ do
                
                # gaussian job specification line depending on solvent:
                if [[ $j == "DMF" ]]; then
-                  echo '#p 5d u'$k'/6-311+g(d,p) scrf(smd,solvent=n,n-DiMethylFormamide) guess=mix stable=opt Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
+                  echo '#p 5d u'$k'/6-311+g(d,p) scrf(smd,solvent=n,n-DiMethylFormamide) guess=mix stable=opt Geom=Checkpoint gfinput' | cat >> temp
                elif [[ $j == "gas" ]]; then
-                  echo '#p 5d u'$k'/6-311+g(d,p) guess=mix stable=opt Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
+                  echo '#p 5d u'$k'/6-311+g(d,p) guess=mix stable=opt Geom=Checkpoint gfinput' | cat >> temp
                elif [[ $j == "o-DCB" ]]; then
-                  echo '#p 5d u'$k'/6-311+g(d,p) scrf(smd,solvent=o-DiChloroBenzene) guess=mix stable=opt Geom=Checkpoint pop=nbo output=wfn gfinput' | cat >> temp
+                  echo '#p 5d u'$k'/6-311+g(d,p) scrf(smd,solvent=o-DiChloroBenzene) guess=mix stable=opt Geom=Checkpoint gfinput' | cat >> temp
                fi
 
 		         echo ' ' | cat >> temp

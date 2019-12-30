@@ -1,0 +1,103 @@
+How to make our job easier:
+
+-----------------------------------------------------------------------------------------
+
+As a start: convert conformers script to print 15 random rotor results into 15 different directories with gaussian input files. That should be fine.
+
+-----------------------------------------------------------------------------------------
+
+Experimentalist sends chemdraw with intermediates
+
+From chemdraw, prepare text file with smiles, charge and multiplicity of intermediates by
+using the copy as option in chemdraw. And I believe we can all predict multiplicity and charge.
+For example:
+
+smiles_1 0 1
+smiles_2 0 1
+.
+.
+.
+
+Write script to: 
+Load smiles file
+Script prepares gaussian input files with 10 lowest conformations for each smile
+Script submits jobs
+(script is still running. At every 30 min checks every folder to see if there is
+.chk file. Or, checks running jobs on computational center for user until output is empty)
+Jobs come out
+
+Sort jobs by energy.
+
+Now prepare jobs for higher level energy, solvent etc. For those optimizations that did 
+converge and do not have an imaginary frequency
+Submit jobs
+(script is still running. At every 30 min checks every folder to see if there is a
+.chk file. Or, checks running jobs on computational center for user until output is empty)
+jobs come out
+
+Finally you have the following directory tree:
+                                
+
+                       level of theory 1                       level of theory 2      ...
+         1                      2                  3                    (Intermediates' labels)
+1_1 1_2 2_3 1_4 1_5   2_1 2_2 2_3 2_4 2_5 ...                           (Intermediates' structures
+                                                                         sorted by energy)
+And you have a text file with the following table
+
+       level of theory 1    level of theory 2             ...
+          E E0 H G            E E0 H G                    ...
+1_1
+1_2
+.
+.
+.
+3_1
+3_2
+.
+.
+.
+
+-------------------------------------------------------------------------------------------------
+
+You can also specify reactions between intermediates. For example have an input file for 
+reactants and an input file for products.
+
+So you would have
+
+input_reactants:
+E1 1 2
+E2 2 3
+
+input_products
+E1 3 4
+E2 4 5
+
+and then the script can also give the computed reaction energies.
+
+-------------------------------------------------------------------------------------------------
+
+Also. Print SI info with lowest E geometries and energies. have an option to just do that.
+
+-------------------------------------------------------------------------------------------------
+
+Would be a problem with more complicated structures - for example dimers. For these, you can
+prepare a series of gaussian input files, and have the script load those instead.
+
+How to search dimers?
+Partition space around each monomer unit in 8 quadrants. Have the quadrants meet at all different
+combinations of faces, edges, and  vertices at a series of distances. Also, you can always
+prepare your own, chemical intuition gaussian input files and load those too. Then, as usual,
+submit jobs for optimization, sort by energy for those that did converge, run higher level etc.
+
+-------------------------------------------------------------------------------------------------
+
+Might also be a problem for some weird radicals. But. You can always go in and look at structures
+and deal with unusual structures by hand. But. How many unusual structures are you going to see
+in one experimental system?
+
+--------------------------------------------------------------------------------------------------
+
+Another option could be to just prepare a series of gjf files, and then you can just write
+out the gaussian files from there and skip the generation of coordinates step, but still do
+all of the optimizations, single points etc. If the system has some kind of unusual intermediates
+Or just not skip that step and do it anyway, and then the program runs as usual.
