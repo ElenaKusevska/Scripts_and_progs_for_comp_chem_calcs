@@ -1,0 +1,37 @@
+TITLE      Optimization and frequency calculation
+REMARK   1 File created by GaussView 5.0.8
+HETATM    1 Pt           0       0.000  -0.002  -0.001                      Pt
+HETATM    2  P           0      -1.516  -1.005   1.414                       P
+HETATM    3  P           0       1.684   0.967   1.237                       P
+HETATM    4  P           0       0.898  -1.585  -1.412                       P
+HETATM    5  P           0      -1.066   1.618  -1.245                       P
+HETATM    6  F           0      -3.033  -0.515   1.403                       F
+HETATM    7  F           0      -1.783  -2.571   1.285                       F
+HETATM    8  F           0      -1.270  -0.945   2.988                       F
+HETATM    9  F           0      -0.571   3.130  -1.144                       F
+HETATM   10  F           0      -2.624   1.874  -1.018                       F
+HETATM   11  F           0      -1.087   1.492  -2.834                       F
+HETATM   12  F           0       1.644   0.855   2.827                       F
+HETATM   13  F           0       1.926   2.539   1.127                       F
+HETATM   14  F           0       3.189   0.489   1.014                       F
+HETATM   15  F           0       2.473  -1.835  -1.402                       F
+HETATM   16  F           0       0.705  -1.425  -2.987                       F
+HETATM   17  F           0       0.427  -3.103  -1.280                       F
+END
+CONECT    1    2    3    4    5
+CONECT    2    1    6    7    8
+CONECT    3    1   12   13   14
+CONECT    4    1   15   16   17
+CONECT    5    1    9   10   11
+CONECT    6    2
+CONECT    7    2
+CONECT    8    2
+CONECT    9    5
+CONECT   10    5
+CONECT   11    5
+CONECT   12    3
+CONECT   13    3
+CONECT   14    3
+CONECT   15    4
+CONECT   16    4
+CONECT   17    4

@@ -1,0 +1,13 @@
+REMARK original generated coordinate pdb file
+ATOM      1  FE  TBA X   0     0.000     0.000   0.000  1.00  0.00  TBA     Fe
+ATOM      2  C   TBA X   0     0.000     1.818   0.000  1.00  0.00  TBA      C
+ATOM      3  C   TBA X   0     0.000     0.000   1.807  1.00  0.00  TBA      C
+ATOM      4  C   TBA X   0    -1.565     0.000  -0.904  1.00  0.00  TBA      C
+ATOM      5  C   TBA X   0     1.565     0.000  -0.904  1.00  0.00  TBA      C
+ATOM      6  C   TBA X   0     0.000    -1.818   0.000  1.00  0.00  TBA      C
+ATOM      7  O   TBA X   0     0.000     2.966   0.000  1.00  0.00  TBA      O
+ATOM      8  O   TBA X   0     0.000     0.000   2.958  1.00  0.00  TBA      O
+ATOM      9  O   TBA X   0    -2.561     0.000  -1.480  1.00  0.00  TBA      O
+ATOM     10  O   TBA X   0     2.561     0.000  -1.480  1.00  0.00  TBA      O
+ATOM     11  O   TBA X   0     0.000    -2.966   0.000  1.00  0.00  TBA      O
+END
