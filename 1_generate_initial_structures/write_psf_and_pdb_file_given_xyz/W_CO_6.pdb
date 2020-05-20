@@ -1,0 +1,15 @@
+REMARK PDB file generated from DFT optimized geometry 
+ATOM      1 W1   MOL A   1      -0.424  -0.258   0.473  0.00  0.00      MOLA W 0
+ATOM      2 C1   MOL A   1      -0.775  -1.507   1.867  0.00  0.00      MOLA C 0
+ATOM      3 O1   MOL A   1      -1.001  -2.314   2.768  0.00  0.00      MOLA O 0
+ATOM      4 C2   MOL A   1       0.676   0.752   1.655  0.00  0.00      MOLA C 0
+ATOM      5 O2   MOL A   1       1.386   1.404   2.419  0.00  0.00      MOLA O 0
+ATOM      6 C3   MOL A   1       1.091  -1.281  -0.062  0.00  0.00      MOLA C 0
+ATOM      7 O3   MOL A   1       2.069  -1.941  -0.408  0.00  0.00      MOLA O 0
+ATOM      8 C4   MOL A   1      -0.073   0.991  -0.921  0.00  0.00      MOLA C 0
+ATOM      9 O4   MOL A   1       0.153   1.798  -1.822  0.00  0.00      MOLA O 0
+ATOM     10 C5   MOL A   1      -1.524  -1.268  -0.709  0.00  0.00      MOLA C 0
+ATOM     11 O5   MOL A   1      -2.234  -1.920  -1.473  0.00  0.00      MOLA O 0
+ATOM     12 C6   MOL A   1      -1.939   0.765   1.008  0.00  0.00      MOLA C 0
+ATOM     13 O6   MOL A   1      -2.917   1.425   1.354  0.00  0.00      MOLA O 0
+END

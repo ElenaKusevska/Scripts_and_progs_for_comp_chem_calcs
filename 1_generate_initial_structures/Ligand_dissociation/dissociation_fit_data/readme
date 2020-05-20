@@ -1,0 +1,30 @@
+This is a python3 script to fit a function to given data.
+
+It uses the numpy, scipy, and matplotlib libraries. In order to run the script,
+these libraries must be installed on your computer. The easiest way is by
+downloading them directly. For example, in ubuntu, open the terminal and
+run the command:
+
+sudo apt-get install python3-numpy python3-scipy python3-matplotlib
+
+On some python installations it is possible to encounter an issue with
+the plot not showing, even though the script runs and performs the fit.
+This is usually because of incompatible settings for the python backend.
+One possible solution is to run the following list of commands:
+
+Download the tk backend:
+1) sudo apt-get install tcl-dev tk-dev python-tk python3-tk
+
+Install the locate command:
+2) sudo apt-get install locate
+
+In order to find the location of the matplotlib configuration file:
+3) locate matplotlibrc
+
+In order to edit the matplotlib configuration file:
+4) sudo vi /etc/matplotlibrc (or whatever the output of locate is)
+
+by:
+5) seting in matplotlibrc the line "backend      : something" 
+to "backend      : TkAgg"
+

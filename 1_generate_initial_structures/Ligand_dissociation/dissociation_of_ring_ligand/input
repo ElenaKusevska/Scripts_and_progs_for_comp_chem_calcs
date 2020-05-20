@@ -1,0 +1,4 @@
+molecule 1:
+file  MeCpPtMe3_opt_last
+ring 1 2 3 4 5
+Pt_fragment 14 15 16 17 18 19 20 21 22 23 24 25 26

@@ -1,0 +1,38 @@
+The input file specifies the name of the .pdb file, the range of lengths
+for the bonds between the atoms in the molecule, and, if known,
+the charges on each atom.
+
+-------------------------------------
+Input geometry: W_CO_6.xyz
+-------------------------------------
+
+-------------------------------------
+Bond lengths and bond orders:
+-------------------------------------
+atom1 atom2 thresholdmin thresholdmax bond_order
+W     C     0.0         1.91         1
+W     O     1.89         1.91         1
+W     W     2.50         2.50         1
+C     O     0.00         1.40         1
+C     C     1.49         1.53         1
+C     C     1.35         1.40         2
+C     C     1.40         1.49         2.5
+O     O     1.50         0.52         1
+C     H     1.00         1.20         1
+O     H     1.50         1.50         1
+H     H     1.50         1.50         1
+C     F     1.35         1.45         1
+O     F     1.50         1.50         1
+F     F     1.50         1.50         1
+F     H     1.50         1.50         1
+Au    C     2.06         2.07         0.5
+Au    O     2.10         2.20         0.5
+Au    F     2.00         2.00         0.5
+Au    H     2.00         2.00         0.5
+
+--------------
+Charges:
+--------------
+8 0.245
+5 0.567
+
