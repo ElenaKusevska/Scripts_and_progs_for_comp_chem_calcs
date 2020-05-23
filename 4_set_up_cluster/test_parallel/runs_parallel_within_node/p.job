@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# General2 has 40 processors and 120 GB per node
+
+#SBATCH --job-name=parallel_test
+#SBATCH --partition=test
+#SBATCH --ntasks=3
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=3
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=12G
+#SBATCH --time=00:05:00 
+
+#srun="srun --exclusive -N1 -n1"
+srun="srun -N1 -n1"
+
+# Execute jobs in parallel
+for i in 1 2 3
+do
+    $srun  sh$i.sh &
+done
+wait
+
