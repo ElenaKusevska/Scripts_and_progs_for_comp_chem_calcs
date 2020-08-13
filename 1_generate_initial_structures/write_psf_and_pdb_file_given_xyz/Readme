@@ -10,7 +10,8 @@ different file name for the input file, run the script with a -i option,
 followed by the desired name of the input file. The input file contains 
 the name of the PDB file, information about the ranges of bond lengths 
 for the atoms in the molecule, as well as information about atomic 
-charges, if available.
+charges, if available. An example of the formatting of the input file
+is provided here.
 
 The program identifies the bonds in the molecular structure in the PDB
 by constructing the connectivity matrix of the molecule using the 
@@ -21,22 +22,12 @@ of the atoms in the molecule for the presence of an angle, and
 4-combinations of the atoms in the molecule for the presence of a
 dihedral.
 
-The resulting PSF file has the same file name as the input PDB file, but
-with the .psf extension. Another file with the same name and a
+The resulting PSF and PDB files have the same file name as the xyz file, but
+with the .psf and .pdb extensions. Another file with the same name and a
 .output extension is also generated. In the .output file the script prints
 all the information that was read from the input and PDB files, as well
 as the distance matrix. This is useful in debuggin the program.
 
-IMPORTANT: This script overwrites all the files that it writes. If a PSF
-or .output file of the same name was present in the directory before
+IMPORTANT: This script overwrites all the files that it creates. If a PSF
+or PDB or .output file of the same name was present in the directory before
 running the script, it will be overwritten.
-
-The program also prints the following information about the run on the 
-command line: 
-   1) Whether a PSF or .output file was already present in the directory. 
-   2) Whether each line of the PDB file corresponds to a type 1 or type 2 
-      PDB file. These differe in that in type 2 PDB files there is a space 
-      between the residue name and the chain ID.
-   3) Whether a PSF, or an extended PSF file is going to be printed.
-      Extended PSF files have wider column widths, allowing for longer
-      residue names to be printed
