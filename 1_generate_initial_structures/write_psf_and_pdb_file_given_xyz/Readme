@@ -5,42 +5,12 @@ Run the script on the command line in the same directory as the PDB file.
 An input file and the file "read_test_mod.py" must also be present in 
 the directory. This program is specific to linux operating systems.
 
-"write_psf_file.py" is the main program of the script, where the main
-procedures for determining the bonds angles and dihedrals are located,
-as well as the procedures for writing to the PSF file. 
-The file "read_test_mod.py" contains additional routines for getting 
-information out of the input file, and a few other routines used by 
-the main program.
-
 The default name of the input file is "input". If you want to use a 
 different file name for the input file, run the script with a -i option, 
 followed by the desired name of the input file. The input file contains 
 the name of the PDB file, information about the ranges of bond lengths 
 for the atoms in the molecule, as well as information about atomic 
 charges, if available.
-
-The formatting of the input file is fairly flexible. In order to identify
-the name of the PDB file it searches for a string that contains the
-character sequence ".pdb". If there are multiple such strings, the last 
-one is taken as the name of the PDB file. It reads in the information 
-about the ranges of bond lengths from the lines following the line 
-containing the character sequence "thresholdmin thresholdmax", until 
-the next blank line. The columns containing the information about the 
-bond lengths should be structured in the following way: 
-"atom1 atom2 thresholdmin thresholdmax bond_order". 
-The script also looks for a line containing the character sequence: 
-"Charges:". If such a line is found, and it is followed by a line 
-containing "-------", the atomic charges are read starting from the 
-following line, until the next blank line. The information about the 
-atomic charges should be structured as: 
-"atomic_number atomic_charge". 
-Examples of input files are given in the examples folder.
-The information about the bond lengths and atomic charges does not have 
-a fixed position within a line, but the order of the columns is fixed.
-
-IMPORTANT: The input file and PDB file are case-sensitive. It is important
-that atom lables in both files are identical. Otherwise the script will
-exit with an error.
 
 The program identifies the bonds in the molecular structure in the PDB
 by constructing the connectivity matrix of the molecule using the 
